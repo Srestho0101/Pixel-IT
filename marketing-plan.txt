@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel IT Thakurgaon - Interactive Growth Strategy & Digital Transformation Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Tiro Bangla', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0f172a',
+                        },
+                        warm: {
+                            50: '#fbfbf9',
+                            100: '#f5f5f0',
+                            200: '#e6e6dc',
+                            800: '#2d2d2a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .tab-active {
+            border-bottom: 3px solid #0284c7;
+            color: #0284c7;
+            font-weight: 700;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutral Canvas with Crisp Slate & Slate-Blue Accents -->
+    <!-- Application Structure Plan: Designed as a 5-part Strategic Growth Hub with dual-language (English and natural Bangla) capabilities.
+         1. Executive Overview KPI Dashboard - Key baseline vs target metrics with dynamic language toggling.
+         2. Current Digital Footprint Audit - Interactive breakdown of Pixel IT's strengths and fixes needed.
+         3. Benchmark Analysis (National & Local) - Interactive competitor comparison matrix & traffic share dynamic chart.
+         4. Diagnostic Failure Modes - Interactive step-by-step causal model showing why non-digital shops fail.
+         5. Actionable Strategic Roadmap - Interactive 4-Phase execution plan with tabbed details, timelines, and measurable KPIs. -->
+    <!-- Visualization & Content Choices: 
+         - Traffic Source Breakdown: Chart.js Donut chart to show Star Tech organic dominance vs local footfall reliance with dynamically updating chart labels upon EN/BN toggle.
+         - Competitor Feature Comparison: Interactive dynamic table with status indicators and full bilingual support.
+         - Failure Mode Causal Loop: Interactive step-by-step HTML block with bilingual dynamic explanations.
+         - Roadmap Phase Tabs: Interactive JS tab switching for structured action plan display.
+         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visuals rely on Canvas (Chart.js), HTML/Tailwind styling, and Unicode symbols. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-warm-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-xl shadow-inner">
+                        P
+                    </div>
+                    <div>
+                        <h1 id="app-title" class="font-bold text-lg text-slate-900 leading-tight">Pixel IT Growth Strategy</h1>
+                        <p id="app-subtitle" class="text-xs text-slate-500">Thakurgaon Digital Transformation Dashboard</p>
+                    </div>
+                </div>
+
+                <!-- Navigation & Language Toggle Container -->
+                <div class="flex items-center gap-4">
+                    <!-- Main Navigation Tabs -->
+                    <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                        <button onclick="switchTab('overview')" id="nav-overview" class="tab-btn tab-active py-5 px-1">Overview</button>
+                        <button onclick="switchTab('audit')" id="nav-audit" class="tab-btn text-slate-600 hover:text-brand-600 py-5 px-1">Audit & Assets</button>
+                        <button onclick="switchTab('benchmarks')" id="nav-benchmarks" class="tab-btn text-slate-600 hover:text-brand-600 py-5 px-1">Benchmarks</button>
+                        <button onclick="switchTab('failures')" id="nav-failures" class="tab-btn text-slate-600 hover:text-brand-600 py-5 px-1">Failure Analysis</button>
+                        <button onclick="switchTab('roadmap')" id="nav-roadmap" class="tab-btn text-slate-600 hover:text-brand-600 py-5 px-1">Strategic Roadmap</button>
+                    </nav>
+
+                    <!-- Language Switcher Toggle -->
+                    <div class="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-bold">
+                        <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2.5 py-1 rounded-md transition-all bg-brand-600 text-white shadow-sm">EN</button>
+                        <button onclick="setLanguage('bn')" id="lang-btn-bn" class="px-2.5 py-1 rounded-md transition-all text-slate-600 hover:text-slate-900">বাংলা</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation bar -->
+        <div class="md:hidden border-t border-slate-200 bg-slate-50 flex overflow-x-auto custom-scrollbar px-2 py-2 gap-2 text-xs font-semibold">
+            <button onclick="switchTab('overview')" id="mnav-overview" class="px-3 py-1.5 rounded bg-brand-600 text-white whitespace-nowrap">Overview</button>
+            <button onclick="switchTab('audit')" id="mnav-audit" class="px-3 py-1.5 rounded bg-white border border-slate-300 whitespace-nowrap">Audit</button>
+            <button onclick="switchTab('benchmarks')" id="mnav-benchmarks" class="px-3 py-1.5 rounded bg-white border border-slate-300 whitespace-nowrap">Benchmarks</button>
+            <button onclick="switchTab('failures')" id="mnav-failures" class="px-3 py-1.5 rounded bg-white border border-slate-300 whitespace-nowrap">Failure Logic</button>
+            <button onclick="switchTab('roadmap')" id="mnav-roadmap" class="px-3 py-1.5 rounded bg-white border border-slate-300 whitespace-nowrap">Roadmap</button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- SECTION 1: OVERVIEW & KEY METRICS -->
+        <section id="sec-overview" class="tab-content space-y-8">
+            <!-- Intro Paragraph -->
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 id="ov-heading" class="text-2xl font-bold text-slate-900 mb-2">Executive Summary: Pixel IT Digital Growth Strategy</h2>
+                <p id="ov-desc" class="text-slate-600 leading-relaxed">
+                    This interactive dashboard provides a comprehensive analysis of Pixel IT's physical and digital market presence in Thakurgaon, Rangpur Division. Designed specifically for the Digital Marketing Executive, this portal synthesizes regional market realities, national benchmarks (such as Star Tech), diagnostic models of retail failure, and a multi-phase strategic optimization plan. Use the tabs above and interactive widgets below to explore data-driven insights and execute Pixel IT's digital expansion.
+                </p>
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-brand-500 transition">
+                    <div id="kpi1-title" class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Target Regional Reach</div>
+                    <div id="kpi1-val" class="text-2xl font-extrabold text-slate-900">5 Upazilas</div>
+                    <p id="kpi1-sub" class="text-xs text-emerald-600 mt-2 font-medium">Thakurgaon, Baliadangi, Pirganj, Ranisankail, Haripur</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-brand-500 transition">
+                    <div id="kpi2-title" class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">National Benchmark Traffic</div>
+                    <div id="kpi2-val" class="text-2xl font-extrabold text-brand-600">69.15% Organic</div>
+                    <p id="kpi2-sub" class="text-xs text-slate-500 mt-2">Star Tech's traffic search proportion benchmark</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-brand-500 transition">
+                    <div id="kpi3-title" class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Consumer Digital Research</div>
+                    <div id="kpi3-val" class="text-2xl font-extrabold text-amber-600">> 90% Pre-Purchase</div>
+                    <p id="kpi3-sub" class="text-xs text-slate-500 mt-2">Consumers checking prices online before physical visits</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-brand-500 transition">
+                    <div id="kpi4-title" class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Target Revenue Growth</div>
+                    <div id="kpi4-val" class="text-2xl font-extrabold text-emerald-600">+35% YoY</div>
+                    <p id="kpi4-sub" class="text-xs text-slate-500 mt-2">Targeted post-Roadmap implementation expansion</p>
+                </div>
+            </div>
+
+            <!-- Chart & Visual Analysis Block -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Traffic Acquisition Benchmark Chart -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 id="chart-title" class="text-lg font-bold text-slate-900 mb-1">Traffic Channel Share Benchmark</h3>
+                        <p id="chart-sub" class="text-xs text-slate-500 mb-4">Comparing national technology retail leader (Star Tech) vs typical un-optimized regional retail storefronts.</p>
+                        <div class="chart-container">
+                            <canvas id="trafficBenchmarkChart"></canvas>
+                        </div>
+                    </div>
+                    <p id="chart-footer" class="text-xs text-slate-500 mt-4 border-t border-slate-100 pt-3">
+                        <span class="font-semibold text-slate-700">Takeaway:</span> Market leaders drive nearly 70% of traffic via non-paid organic search and strong GEO structure, minimizing reliance on high ad spend.
+                    </p>
+                </div>
+
+                <!-- Strategic Priority Focus Matrix -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 id="pillars-title" class="text-lg font-bold text-slate-900 mb-1">Strategic Growth Pillars for Pixel IT</h3>
+                        <p id="pillars-sub" class="text-xs text-slate-500 mb-4">Core execution domains for the Digital Marketing Executive to achieve regional dominance.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="p-3 bg-brand-50 rounded-lg border-l-4 border-brand-600">
+                                <div class="flex justify-between items-center">
+                                    <span id="pillar1-head" class="font-bold text-slate-900 text-sm">1. Web Remediation & Trust</span>
+                                    <span id="pillar1-badge" class="text-xs bg-brand-200 text-brand-800 px-2 py-0.5 rounded font-semibold">Immediate</span>
+                                </div>
+                                <p id="pillar1-desc" class="text-xs text-slate-600 mt-1">Eliminate placeholder text ("Lorem Ipsum"), fix broken links, display real-time store stock & clear warranty terms.</p>
+                            </div>
+                            <div class="p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-600">
+                                <div class="flex justify-between items-center">
+                                    <span id="pillar2-head" class="font-bold text-slate-900 text-sm">2. Hyper-Local SEO & GEO</span>
+                                    <span id="pillar2-badge" class="text-xs bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded font-semibold">Months 2–4</span>
+                                </div>
+                                <p id="pillar2-desc" class="text-xs text-slate-600 mt-1">Capture upazila-level keywords (e.g., "Laptop price in Pirganj") and rank #1 in Google Local 3-Pack.</p>
+                            </div>
+                            <div class="p-3 bg-amber-50 rounded-lg border-l-4 border-amber-600">
+                                <div class="flex justify-between items-center">
+                                    <span id="pillar3-head" class="font-bold text-slate-900 text-sm">3. Video F-Commerce Engine</span>
+                                    <span id="pillar3-badge" class="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded font-semibold">Months 3–6</span>
+                                </div>
+                                <p id="pillar3-desc" class="text-xs text-slate-600 mt-1">Deploy "Thakurgaon Tech Review" unboxings and automate Messenger catalog sales bots.</p>
+                            </div>
+                            <div class="p-3 bg-indigo-50 rounded-lg border-l-4 border-indigo-600">
+                                <div class="flex justify-between items-center">
+                                    <span id="pillar4-head" class="font-bold text-slate-900 text-sm">4. B2B & Doorstep Services</span>
+                                    <span id="pillar4-badge" class="text-xs bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded font-semibold">Months 6–12</span>
+                                </div>
+                                <p id="pillar4-desc" class="text-xs text-slate-600 mt-1">Establish doorstep repairs & institutional hardware procurement contracts across Rangpur division.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: AUDIT & ASSETS -->
+        <section id="sec-audit" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 id="audit-heading" class="text-2xl font-bold text-slate-900 mb-2">Pixel IT Footprint & Digital Audit</h2>
+                <p id="audit-desc" class="text-slate-600 leading-relaxed">
+                    This section analyzes Pixel IT's physical operations, product mix, existing web infrastructure (<code class="bg-slate-100 text-brand-700 px-1.5 py-0.5 rounded">pixelit.com.bd</code> built on OpenCart), and technical deficiencies. Understanding these friction points allows us to convert existing platform investment into a high-converting digital engine.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Physical & Product Assets -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 id="audit-phys-title" class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">Physical Retail Footprint & Product Portfolio</h3>
+                    
+                    <div>
+                        <h4 id="audit-outlets-head" class="font-semibold text-sm text-brand-700">Physical Outlets (Thakurgaon Hubs):</h4>
+                        <ul class="text-xs text-slate-600 mt-1 space-y-1 list-disc list-inside">
+                            <li id="audit-outlet-1"><span class="font-medium text-slate-800">Primary Hub:</span> Suruchi Super Market, Bangabandhu Road</li>
+                            <li id="audit-outlet-2"><span class="font-medium text-slate-800">Secondary Outlet:</span> Nishi Market, Muslim Nagar</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 id="audit-inv-head" class="font-semibold text-sm text-brand-700">Inventory Analysis:</h4>
+                        <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+                            <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                                <span id="inv-laptops-title" class="font-bold text-slate-800 block">Laptops & PCs</span>
+                                <span id="inv-laptops-body">ASUS Vivobook 15, Lenovo IdeaPad Slim 3i, Intel Core i3/i5, Gigabyte Motherboards.</span>
+                            </div>
+                            <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                                <span id="inv-router-title" class="font-bold text-slate-800 block">Networking</span>
+                                <span id="inv-router-body">Dual-band Wi-Fi 6 & AC1200 routers from TP-Link, Tenda, Netis, and Cudy.</span>
+                            </div>
+                            <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                                <span id="inv-peri-title" class="font-bold text-slate-800 block">Peripherals</span>
+                                <span id="inv-peri-body">A4Tech, Micropack, Havit office keyboards, silent mice, and gaming gear.</span>
+                            </div>
+                            <div class="p-2.5 bg-slate-50 rounded border border-slate-200">
+                                <span id="inv-print-title" class="font-bold text-slate-800 block">Printers & Projectors</span>
+                                <span id="inv-print-body">Canon Pixma Ink Tank, HP Laser, Brother Multi-function, Magcubic HY320 smart projectors.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Audit & Technical Deficiencies -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 id="audit-tech-title" class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">Digital Infrastructure & Vulnerability Audit</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <span class="text-red-600 font-bold">⚠ Critical Bug:</span>
+                                <span id="bug1-title" class="text-xs font-bold text-red-900">Template Placeholder Content</span>
+                            </div>
+                            <p id="bug1-desc" class="text-xs text-slate-600 mt-1">Unedited "Lorem Ipsum" text present in header categories, main banners, and footer informational blocks on <code class="text-red-700">pixelit.com.bd</code>. Destroys consumer trust and boosts bounce rates.</p>
+                        </div>
+
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <span class="text-amber-600 font-bold">⚠ Technical Gap:</span>
+                                <span id="bug2-title" class="text-xs font-bold text-amber-900">Unoptimized SEO & Schema Markup</span>
+                            </div>
+                            <p id="bug2-desc" class="text-xs text-slate-600 mt-1">Missing JSON-LD structured data (<code class="text-amber-800">LocalBusiness</code>, <code class="text-amber-800">Product</code>). Lacks hyper-local keyword targets for surrounding upazilas (Baliadangi, Pirganj, Ranisankail).</p>
+                        </div>
+
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <span class="text-amber-600 font-bold">⚠ Operational Bottleneck:</span>
+                                <span id="bug3-title" class="text-xs font-bold text-amber-900">Fragmented F-Commerce Execution</span>
+                            </div>
+                            <p id="bug3-desc" class="text-xs text-slate-600 mt-1">Relies on passive Facebook posts and manual messaging without automated catalog synchronization, structure Meta video ads, or automated lead capture.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: BENCHMARKS -->
+        <section id="sec-benchmarks" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 id="bench-title" class="text-2xl font-bold text-slate-900 mb-2">Regional & National Benchmark Analysis</h2>
+                <p id="bench-desc" class="text-slate-600 leading-relaxed">
+                    Compare Pixel IT against national market leader **Star Tech Ltd** and local Thakurgaon competitors (**Aptouch Computer Sales** and **Thakurgaon IT**). Use the interactive filter below to evaluate operational capabilities and strategic positioning.
+                </p>
+            </div>
+
+            <!-- Interactive Comparison Matrix -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap justify-between items-center gap-4">
+                    <h3 id="matrix-title" class="font-bold text-slate-900 text-sm">Competitive Matrix Comparison</h3>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span id="matrix-filter-lbl" class="text-slate-500 font-medium">Highlight Focus:</span>
+                        <select id="matrixFilter" onchange="filterMatrix()" class="border border-slate-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="all">All Operational Metrics</option>
+                            <option value="traffic">Traffic & Footprint</option>
+                            <option value="fcommerce">Social & Community</option>
+                            <option value="tech">E-Commerce Platform</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-600">
+                        <thead class="bg-slate-100 text-slate-700 font-bold uppercase tracking-wider border-b border-slate-200">
+                            <tr>
+                                <th id="th-feature" class="p-3 sm:p-4">Operational Feature</th>
+                                <th id="th-startech" class="p-3 sm:p-4 bg-brand-50 text-brand-900 border-x border-brand-200">Star Tech Ltd (National Leader)</th>
+                                <th id="th-aptouch" class="p-3 sm:p-4">Aptouch Computer Sales (Local)</th>
+                                <th id="th-thakurgaonit" class="p-3 sm:p-4">Thakurgaon IT (Local)</th>
+                                <th id="th-pixelit" class="p-3 sm:p-4 bg-amber-50 text-amber-900 font-bold">Pixel IT (Target Store)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 font-medium">
+                            <tr class="matrix-row metric-model">
+                                <td id="m1-feat" class="p-3 sm:p-4 font-bold text-slate-900">Primary Business Model</td>
+                                <td id="m1-star" class="p-3 sm:p-4 bg-brand-50 border-x border-brand-200">National Omnichannel Retail & Distribution</td>
+                                <td id="m1-ap" class="p-3 sm:p-4">Hardware Retail, Repair & BTEB Technical Training</td>
+                                <td id="m1-th" class="p-3 sm:p-4">B2B Digital Marketing & Web Agency Services</td>
+                                <td id="m1-px" class="p-3 sm:p-4 bg-amber-50 text-amber-900">IT Hardware Retail & Regional E-Commerce</td>
+                            </tr>
+                            <tr class="matrix-row metric-traffic">
+                                <td id="m2-feat" class="p-3 sm:p-4 font-bold text-slate-900">Monthly Online Footprint</td>
+                                <td id="m2-star" class="p-3 sm:p-4 bg-brand-50 border-x border-brand-200">4.4M – 10.4M Web Visits (~100k daily users)</td>
+                                <td id="m2-ap" class="p-3 sm:p-4">High Facebook Video Reach & Direct Inquiries</td>
+                                <td id="m2-th" class="p-3 sm:p-4">Localized Digital Agency Service Page Traffic</td>
+                                <td id="m2-px" class="p-3 sm:p-4 bg-amber-50 text-amber-900">Emerging E-Commerce Site Traffic (Unoptimized)</td>
+                            </tr>
+                            <tr class="matrix-row metric-traffic">
+                                <td id="m3-feat" class="p-3 sm:p-4 font-bold text-slate-900">Primary Web Acquisition</td>
+                                <td id="m3-star" class="p-3 sm:p-4 bg-brand-50 border-x border-brand-200">69.15% Organic Search + Mobile MFS Integration</td>
+                                <td id="m3-ap" class="p-3 sm:p-4">Facebook Video Posts & Messenger Inbox</td>
+                                <td id="m3-th" class="p-3 sm:p-4">Community E-Sports Tournaments & Campaigns</td>
+                                <td id="m3-px" class="p-3 sm:p-4 bg-amber-50 text-amber-900">Direct Physical Store Visits & Direct URL</td>
+                            </tr>
+                            <tr class="matrix-row metric-tech">
+                                <td id="m4-feat" class="p-3 sm:p-4 font-bold text-slate-900">E-Commerce Architecture</td>
+                                <td id="m4-star" class="p-3 sm:p-4 bg-brand-50 border-x border-brand-200">Custom Enterprise Portal + Real-time Inventory Sync</td>
+                                <td id="m4-ap" class="p-3 sm:p-4">Direct FB Messenger & Courier COD Delivery</td>
+                                <td id="m4-th" class="p-3 sm:p-4">Custom Agency Web Service Portfolio</td>
+                                <td id="m4-px" class="p-3 sm:p-4 bg-amber-50 text-amber-900">OpenCart Custom E-Store (pixelit.com.bd)</td>
+                            </tr>
+                            <tr class="matrix-row metric-fcommerce">
+                                <td id="m5-feat" class="p-3 sm:p-4 font-bold text-slate-900">Social Commerce Execution</td>
+                                <td id="m5-star" class="p-3 sm:p-4 bg-brand-50 border-x border-brand-200">Multi-Platform, Affiliate Marketing (5% Commission)</td>
+                                <td id="m5-ap" class="p-3 sm:p-4">Frequent Inventory Videos with Prices & Warranties</td>
+                                <td id="m5-th" class="p-3 sm:p-4">Youth E-Sports Sponsoring & Community Groups</td>
+                                <td id="m5-px" class="p-3 sm:p-4 bg-amber-50 text-amber-900">Basic Facebook Page Announcements & Groups</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: FAILURE ANALYSIS -->
+        <section id="sec-failures" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 id="fail-title" class="text-2xl font-bold text-slate-900 mb-2">Diagnostic Analysis of Retail Hardware Failure Modes</h2>
+                <p id="fail-desc" class="text-slate-600 leading-relaxed">
+                    Why do traditional hardware stores fail in regional markets? Over 90% of tech buyers conduct online research before purchasing. Non-digital storefronts face **Digital Disintermediation**—where local demand bypasses brick-and-mortar stores to buy from national e-commerce portals or social video sellers. Click through the causal steps below to explore this failure mechanism.
+                </p>
+            </div>
+
+            <!-- Causal Interactive Diagram -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div onclick="selectFailureStep(1)" id="step-card-1" class="step-card bg-white p-4 rounded-xl border-2 border-brand-500 shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                    <span id="st1-badge" class="text-xs font-bold text-brand-600 uppercase tracking-wider block mb-1">Stage 1</span>
+                    <h4 id="st1-title" class="font-bold text-slate-900 text-sm">High-Intent Consumer Query</h4>
+                    <p id="st1-desc" class="text-xs text-slate-500 mt-1">Consumer searches for tech on mobile device before visiting store.</p>
+                </div>
+                <div onclick="selectFailureStep(2)" id="step-card-2" class="step-card bg-white p-4 rounded-xl border-2 border-slate-200 shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                    <span id="st2-badge" class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Stage 2</span>
+                    <h4 id="st2-title" class="font-bold text-slate-900 text-sm">Absence of Local Web/SEO</h4>
+                    <p id="st2-desc" class="text-xs text-slate-500 mt-1">Local store lacks dynamic stock pricing or ranks below competitors.</p>
+                </div>
+                <div onclick="selectFailureStep(3)" id="step-card-3" class="step-card bg-white p-4 rounded-xl border-2 border-slate-200 shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                    <span id="st3-badge" class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Stage 3</span>
+                    <h4 id="st3-title" class="font-bold text-slate-900 text-sm">Traffic & Order Bypassing</h4>
+                    <p id="st3-desc" class="text-xs text-slate-500 mt-1">Demand shifts to national e-commerce or local video sellers.</p>
+                </div>
+                <div onclick="selectFailureStep(4)" id="step-card-4" class="step-card bg-white p-4 rounded-xl border-2 border-slate-200 shadow-sm cursor-pointer hover:bg-slate-50 transition">
+                    <span id="st4-badge" class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Stage 4</span>
+                    <h4 id="st4-title" class="font-bold text-slate-900 text-sm">Margin Compression & Failure</h4>
+                    <p id="st4-desc" class="text-xs text-slate-500 mt-1">Physical outlet stuck with slow inventory and declining margins.</p>
+                </div>
+            </div>
+
+            <!-- Dynamic Detail Block for Failure Analysis -->
+            <div id="failure-detail-box" class="bg-slate-900 text-white rounded-xl p-6 shadow-md border border-slate-800">
+                <div class="flex items-center gap-2 text-brand-400 font-semibold text-xs uppercase tracking-wider mb-2">
+                    <span id="fail-box-head">Diagnostic Step Breakdown</span>
+                </div>
+                <h3 id="failure-detail-title" class="text-xl font-bold mb-2 text-white">Stage 1: High-Intent Consumer Pre-Purchase Query</h3>
+                <p id="failure-detail-desc" class="text-sm text-slate-300 leading-relaxed mb-4">
+                    Modern technology hardware buyers across Bangladesh—including students, institutions, and professionals in Thakurgaon—no longer walk into physical computer markets blind. Over 90% perform pre-purchase digital research on their smartphones, checking component prices, specs, and local warranty terms.
+                </p>
+                <div class="p-3 bg-slate-800 rounded-lg text-xs text-slate-400 border border-slate-700">
+                    <span id="fail-box-impact" class="text-amber-400 font-bold">Impact on Pixel IT: If Pixel IT does not present detailed pricing and inventory status immediately in search results, the consumer assumes the store lacks stock and drops Pixel IT from their consideration set.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: STRATEGIC ROADMAP -->
+        <section id="sec-roadmap" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 id="road-title" class="text-2xl font-bold text-slate-900 mb-2">Actionable Optimization Roadmap for Pixel IT</h2>
+                <p id="road-desc" class="text-slate-600 leading-relaxed">
+                    This step-by-step roadmap outlines instructions for the Digital Marketing Executive to transform Pixel IT into Thakurgaon's top tech retailer. Select a phase below to inspect specific action items, tools, and Key Performance Indicators (KPIs).
+                </p>
+            </div>
+
+            <!-- Phase Selector Buttons -->
+            <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-4">
+                <button onclick="showPhase(1)" id="phase-btn-1" class="px-4 py-2 rounded-lg font-bold text-xs bg-brand-600 text-white shadow-sm">Phase 1: Technical Remediation (Months 1-2)</button>
+                <button onclick="showPhase(2)" id="phase-btn-2" class="px-4 py-2 rounded-lg font-bold text-xs bg-white text-slate-600 border border-slate-300 hover:bg-slate-50">Phase 2: Local SEO & GEO (Months 2-4)</button>
+                <button onclick="showPhase(3)" id="phase-btn-3" class="px-4 py-2 rounded-lg font-bold text-xs bg-white text-slate-600 border border-slate-300 hover:bg-slate-50">Phase 3: F-Commerce & Videos (Months 3-6)</button>
+                <button onclick="showPhase(4)" id="phase-btn-4" class="px-4 py-2 rounded-lg font-bold text-xs bg-white text-slate-600 border border-slate-300 hover:bg-slate-50">Phase 4: Omnichannel & B2B (Months 6-12)</button>
+            </div>
+
+            <!-- Phase Content Containers -->
+            <div id="phase-content-1" class="phase-container space-y-4">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span id="p1-stage" class="text-xs font-bold text-brand-600 uppercase">Immediate Execution (Months 1–2)</span>
+                            <h3 id="p1-title" class="text-xl font-bold text-slate-900">Phase 1: Technical Web Remediation & Trust Building</h3>
+                        </div>
+                        <span id="p1-target" class="px-3 py-1 bg-brand-100 text-brand-800 rounded-full text-xs font-bold">Target: 0% Dummy Content</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 id="p1-action-head" class="font-bold text-slate-900 mb-2 text-sm">Action Items:</h4>
+                            <ul id="p1-action-list" class="space-y-2 list-disc list-inside">
+                                <li><strong>Content Audit:</strong> Strip all "Lorem Ipsum" placeholder text from category headers, footers, and policy pages on <code class="text-brand-700">pixelit.com.bd</code>.</li>
+                                <li><strong>Clear Warranty Declarations:</strong> Add explicit warranty badges (e.g., "1-Year Official Replacement Warranty") on all laptop and router product pages.</li>
+                                <li><strong>Checkout Optimization:</strong> Convert multi-step OpenCart checkout into a single-page checkout integrated with native mobile financial services (bKash, Nagad, Rocket).</li>
+                                <li><strong>Stock Transparency:</strong> Add real-time stock status ("In Stock at Suruchi Super Market Store").</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+                            <div>
+                                <h4 id="p1-kpi-head" class="font-bold text-slate-900 mb-2 text-sm">Key Performance Indicators (KPIs):</h4>
+                                <ul id="p1-kpi-list" class="space-y-1 list-disc list-inside text-emerald-700 font-semibold">
+                                    <li>0% placeholder dummy text across entire website</li>
+                                    <li>Checkout drop-off rate reduced to &lt; 3%</li>
+                                    <li>Page load speed under 2.5s on mobile networks</li>
+                                </ul>
+                            </div>
+                            <div id="p1-deliv" class="mt-4 p-2 bg-emerald-50 text-emerald-800 rounded font-medium">
+                                Deliverable: A fully trusted, functional web platform ready for high-intent traffic.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="phase-content-2" class="phase-container space-y-4 hidden">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span id="p2-stage" class="text-xs font-bold text-emerald-600 uppercase">Growth Stage (Months 2–4)</span>
+                            <h3 id="p2-title" class="text-xl font-bold text-slate-900">Phase 2: Hyper-Local SEO & Generative Engine Optimization (GEO)</h3>
+                        </div>
+                        <span id="p2-target" class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">Target: #1 Google Local 3-Pack</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 id="p2-action-head" class="font-bold text-slate-900 mb-2 text-sm">Action Items & Keyword Strategy:</h4>
+                            <ul id="p2-action-list" class="space-y-2 list-disc list-inside">
+                                <li><strong>Google Business Profile:</strong> Optimize listing categories ("Computer Store", "Computer Repair Service"), keep phone (<code class="text-slate-800">01737851915</code>) updated, upload interior store photos.</li>
+                                <li><strong>Schema Tagging:</strong> Embed JSON-LD structured data (<code class="text-slate-800">LocalBusiness</code>, <code class="text-slate-800">Product</code>, <code class="text-slate-800">Offer</code>) for live Google price snippets.</li>
+                                <li><strong>Long-Tail Keyword Targeting:</strong> Map product pages to local upazila query strings:
+                                    <ul class="pl-4 mt-1 space-y-1 text-slate-500 list-circle">
+                                        <li>"Best Computer Shop in Thakurgaon"</li>
+                                        <li>"Laptop Price in Pirganj / Baliadangi"</li>
+                                        <li>"Router Shop in Thakurgaon Sadar"</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+                            <div>
+                                <h4 id="p2-kpi-head" class="font-bold text-slate-900 mb-2 text-sm">Key Performance Indicators (KPIs):</h4>
+                                <ul id="p2-kpi-list" class="space-y-1 list-disc list-inside text-emerald-700 font-semibold">
+                                    <li>Top 3 position in Google Local 3-Pack for Thakurgaon tech searches</li>
+                                    <li>+150% increase in local organic search impressions</li>
+                                    <li>AI Search Engines (ChatGPT, Perplexity) referencing Pixel IT for regional computing queries</li>
+                                </ul>
+                            </div>
+                            <div id="p2-deliv" class="mt-4 p-2 bg-emerald-50 text-emerald-800 rounded font-medium">
+                                Deliverable: Dominant organic search capture across all 5 upazilas of Thakurgaon district.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="phase-content-3" class="phase-container space-y-4 hidden">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span id="p3-stage" class="text-xs font-bold text-amber-600 uppercase">Engagement Stage (Months 3–6)</span>
+                            <h3 id="p3-title" class="text-xl font-bold text-slate-900">Phase 3: High-Converting F-Commerce & Community Engine</h3>
+                        </div>
+                        <span id="p3-target" class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">Target: +50% Social Lead Conversion</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 id="p3-action-head" class="font-bold text-slate-900 mb-2 text-sm">Action Items:</h4>
+                            <ul id="p3-action-list" class="space-y-2 list-disc list-inside">
+                                <li><strong>"Thakurgaon Tech Review" Series:</strong> Create 60–90 second Facebook video reviews showcasing laptop unboxings, portable projector setups, and router testing with store staff.</li>
+                                <li><strong>Price Transparency:</strong> Display explicit prices, warranty terms, and direct purchase links in all video descriptions.</li>
+                                <li><strong>Automated Chatbot:</strong> Integrate an automated Facebook Messenger catalog bot connected to <code class="text-brand-700">pixelit.com.bd</code> stock, seamlessly handing off complex technical inquiries to WhatsApp.</li>
+                                <li><strong>Youth Community Outreach:</strong> Sponsor local e-sports tournaments and IT skills workshops with institutions like Thakurgaon Polytechnic Institute.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+                            <div>
+                                <h4 id="p3-kpi-head" class="font-bold text-slate-900 mb-2 text-sm">Key Performance Indicators (KPIs):</h4>
+                                <ul id="p3-kpi-list" class="space-y-1 list-disc list-inside text-emerald-700 font-semibold">
+                                    <li>+50% growth in Facebook Messenger lead conversions</li>
+                                    <li>+25% increase in web traffic originating from social links</li>
+                                    <li>Over 20,000 monthly local video views in Rangpur Division</li>
+                                </ul>
+                            </div>
+                            <div id="p3-deliv" class="mt-4 p-2 bg-emerald-50 text-emerald-800 rounded font-medium">
+                                Deliverable: An automated social selling machine capturing youth and corporate buyers.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="phase-content-4" class="phase-container space-y-4 hidden">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span id="p4-stage" class="text-xs font-bold text-indigo-600 uppercase">Expansion Stage (Months 6–12)</span>
+                            <h3 id="p4-title" class="text-xl font-bold text-slate-900">Phase 4: Omnichannel Service Expansion & Regional Logistics</h3>
+                        </div>
+                        <span id="p4-target" class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-bold">Target: +35% Revenue Expansion</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 id="p4-action-head" class="font-bold text-slate-900 mb-2 text-sm">Action Items:</h4>
+                            <ul id="p4-action-list" class="space-y-2 list-disc list-inside">
+                                <li><strong>Doorstep Tech Services:</strong> Launch "Thakurgaon Doorstep Repair & Installation" for home Wi-Fi setups, printer maintenance, and desktop assembly.</li>
+                                <li><strong>B2B Procurement Outreach:</strong> Target local schools, clinics, NGOs, and government offices with formal annual maintenance contracts (AMC) and official tax invoicing.</li>
+                                <li><strong>District Courier Logistics:</strong> Partner with Steadfast/RedX for reliable cash-on-delivery service across adjacent upazilas.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col justify-between">
+                            <div>
+                                <h4 id="p4-kpi-head" class="font-bold text-slate-900 mb-2 text-sm">Key Performance Indicators (KPIs):</h4>
+                                <ul id="p4-kpi-list" class="space-y-1 list-disc list-inside text-emerald-700 font-semibold">
+                                    <li>+35% overall retail sales growth YoY</li>
+                                    <li>20% of total revenue generated through corporate B2B contracts</li>
+                                    <li>Establishment of premier IT service brand across Rangpur Division</li>
+                                </ul>
+                            </div>
+                            <div id="p4-deliv" class="mt-4 p-2 bg-emerald-50 text-emerald-800 rounded font-medium">
+                                Deliverable: Total market leadership combining digital reach with trusted doorstep physical services.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            <p id="footer-p1">Pixel IT Thakurgaon - Growth Strategy & Digital Transformation Report</p>
+            <p id="footer-p2" class="mt-1 text-slate-400">Prepared for Digital Marketing Executive | Suruchi Super Market & Nishi Market Outlets</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic & Language Dictionary -->
+    <script>
+        let currentLang = 'en';
+        let chartInstance = null;
+
+        // Language Dictionary Data
+        const dict = {
+            en: {
+                appTitle: "Pixel IT Growth Strategy",
+                appSubtitle: "Thakurgaon Digital Transformation Dashboard",
+                navOverview: "Overview",
+                navAudit: "Audit & Assets",
+                navBenchmarks: "Benchmarks",
+                navFailures: "Failure Analysis",
+                navRoadmap: "Strategic Roadmap",
+                ovHeading: "Executive Summary: Pixel IT Digital Growth Strategy",
+                ovDesc: "This interactive dashboard provides a comprehensive analysis of Pixel IT's physical and digital market presence in Thakurgaon, Rangpur Division. Designed specifically for the Digital Marketing Executive, this portal synthesizes regional market realities, national benchmarks (such as Star Tech), diagnostic models of retail failure, and a multi-phase strategic optimization plan. Use the tabs above and interactive widgets below to explore data-driven insights and execute Pixel IT's digital expansion.",
+                kpi1Title: "Target Regional Reach",
+                kpi1Val: "5 Upazilas",
+                kpi1Sub: "Thakurgaon, Baliadangi, Pirganj, Ranisankail, Haripur",
+                kpi2Title: "National Benchmark Traffic",
+                kpi2Val: "69.15% Organic",
+                kpi2Sub: "Star Tech's traffic search proportion benchmark",
+                kpi3Title: "Consumer Digital Research",
+                kpi3Val: "> 90% Pre-Purchase",
+                kpi3Sub: "Consumers checking prices online before physical visits",
+                kpi4Title: "Target Revenue Growth",
+                kpi4Val: "+35% YoY",
+                kpi4Sub: "Targeted post-Roadmap implementation expansion",
+                chartTitle: "Traffic Channel Share Benchmark",
+                chartSub: "Comparing national technology retail leader (Star Tech) vs typical un-optimized regional retail storefronts.",
+                chartFooter: "<span class=\"font-semibold text-slate-700\">Takeaway:</span> Market leaders drive nearly 70% of traffic via non-paid organic search and strong GEO structure, minimizing reliance on high ad spend.",
+                chartLabels: ['Organic Search (SEO/GEO)', 'Direct URL & Footfall', 'Social & Messaging', 'Paid Ads & Affiliates'],
+                pillarsTitle: "Strategic Growth Pillars for Pixel IT",
+                pillarsSub: "Core execution domains for the Digital Marketing Executive to achieve regional dominance.",
+                p1Head: "1. Web Remediation & Trust", p1Badge: "Immediate", p1Desc: "Eliminate placeholder text (\"Lorem Ipsum\"), fix broken links, display real-time store stock & clear warranty terms.",
+                p2Head: "2. Hyper-Local SEO & GEO", p2Badge: "Months 2–4", p2Desc: "Capture upazila-level keywords (e.g., \"Laptop price in Pirganj\") and rank #1 in Google Local 3-Pack.",
+                p3Head: "3. Video F-Commerce Engine", p3Badge: "Months 3–6", p3Desc: "Deploy \"Thakurgaon Tech Review\" unboxings and automate Messenger catalog sales bots.",
+                p4Head: "4. B2B & Doorstep Services", p4Badge: "Months 6–12", p4Desc: "Establish doorstep repairs & institutional hardware procurement contracts across Rangpur division.",
+                auditHeading: "Pixel IT Footprint & Digital Audit",
+                auditDesc: "This section analyzes Pixel IT's physical operations, product mix, existing web infrastructure (<code class=\"bg-slate-100 text-brand-700 px-1.5 py-0.5 rounded\">pixelit.com.bd</code> built on OpenCart), and technical deficiencies. Understanding these friction points allows us to convert existing platform investment into a high-converting digital engine.",
+                auditPhysTitle: "Physical Retail Footprint & Product Portfolio",
+                auditOutletsHead: "Physical Outlets (Thakurgaon Hubs):",
+                auditOutlet1: "<span class=\"font-medium text-slate-800\">Primary Hub:</span> Suruchi Super Market, Bangabandhu Road",
+                auditOutlet2: "<span class=\"font-medium text-slate-800\">Secondary Outlet:</span> Nishi Market, Muslim Nagar",
+                auditInvHead: "Inventory Analysis:",
+                invLaptopsTitle: "Laptops & PCs", invLaptopsBody: "ASUS Vivobook 15, Lenovo IdeaPad Slim 3i, Intel Core i3/i5, Gigabyte Motherboards.",
+                invRouterTitle: "Networking", invRouterBody: "Dual-band Wi-Fi 6 & AC1200 routers from TP-Link, Tenda, Netis, and Cudy.",
+                invPeriTitle: "Peripherals", invPeriBody: "A4Tech, Micropack, Havit office keyboards, silent mice, and gaming gear.",
+                invPrintTitle: "Printers & Projectors", invPrintBody: "Canon Pixma Ink Tank, HP Laser, Brother Multi-function, Magcubic HY320 smart projectors.",
+                auditTechTitle: "Digital Infrastructure & Vulnerability Audit",
+                bug1Title: "Template Placeholder Content", bug1Desc: "Unedited \"Lorem Ipsum\" text present in header categories, main banners, and footer informational blocks on <code class=\"text-red-700\">pixelit.com.bd</code>. Destroys consumer trust and boosts bounce rates.",
+                bug2Title: "Unoptimized SEO & Schema Markup", bug2Desc: "Missing JSON-LD structured data (<code class=\"text-amber-800\">LocalBusiness</code>, <code class=\"text-amber-800\">Product</code>). Lacks hyper-local keyword targets for surrounding upazilas (Baliadangi, Pirganj, Ranisankail).",
+                bug3Title: "Fragmented F-Commerce Execution", bug3Desc: "Relies on passive Facebook posts and manual messaging without automated catalog synchronization, structure Meta video ads, or automated lead capture.",
+                benchTitle: "Regional & National Benchmark Analysis",
+                benchDesc: "Compare Pixel IT against national market leader **Star Tech Ltd** and local Thakurgaon competitors (**Aptouch Computer Sales** and **Thakurgaon IT**). Use the interactive filter below to evaluate operational capabilities and strategic positioning.",
+                matrixTitle: "Competitive Matrix Comparison",
+                matrixFilterLbl: "Highlight Focus:",
+                failTitle: "Diagnostic Analysis of Retail Hardware Failure Modes",
+                failDesc: "Why do traditional hardware stores fail in regional markets? Over 90% of tech buyers conduct online research before purchasing. Non-digital storefronts face **Digital Disintermediation**—where local demand bypasses brick-and-mortar stores to buy from national e-commerce portals or social video sellers. Click through the causal steps below to explore this failure mechanism.",
+                st1Badge: "Stage 1", st1Title: "High-Intent Consumer Query", st1Desc: "Consumer searches for tech on mobile device before visiting store.",
+                st2Badge: "Stage 2", st2Title: "Absence of Local Web/SEO", st2Desc: "Local store lacks dynamic stock pricing or ranks below competitors.",
+                st3Badge: "Stage 3", st3Title: "Traffic & Order Bypassing", st3Desc: "Demand shifts to national e-commerce or local video sellers.",
+                st4Badge: "Stage 4", st4Title: "Margin Compression & Failure", st4Desc: "Physical outlet stuck with slow inventory and declining margins.",
+                failBoxHead: "Diagnostic Step Breakdown",
+                roadTitle: "Actionable Optimization Roadmap for Pixel IT",
+                roadDesc: "This step-by-step roadmap outlines instructions for the Digital Marketing Executive to transform Pixel IT into Thakurgaon's top tech retailer. Select a phase below to inspect specific action items, tools, and Key Performance Indicators (KPIs).",
+                phase1Btn: "Phase 1: Technical Remediation (Months 1-2)",
+                phase2Btn: "Phase 2: Local SEO & GEO (Months 2-4)",
+                phase3Btn: "Phase 3: F-Commerce & Videos (Months 3-6)",
+                phase4Btn: "Phase 4: Omnichannel & B2B (Months 6-12)",
+                footerP1: "Pixel IT Thakurgaon - Growth Strategy & Digital Transformation Report",
+                footerP2: "Prepared for Digital Marketing Executive | Suruchi Super Market & Nishi Market Outlets"
+            },
+            bn: {
+                appTitle: "পিক্সেল আইটি গ্রোথ স্ট্র্যাটেজি",
+                appSubtitle: "ঠাকুরগাঁও ডিজিটাল ট্রান্সফরমেশন ড্যাশবোর্ড",
+                navOverview: "ওভারভিউ (সারসংক্ষেপ)",
+                navAudit: "অডিট ও সম্পদ",
+                navBenchmarks: "প্রতিযোগী মানদণ্ড",
+                navFailures: "ব্যর্থতার কারণ",
+                navRoadmap: "স্ট্র্যাটেজিক রোডম্যাপ",
+                ovHeading: "কার্যনির্বাহী সারসংক্ষেপ: পিক্সেল আইটি ডিজিটাল গ্রোথ স্ট্র্যাটেজি",
+                ovDesc: "এই ইন্টারেক্টিভ ড্যাশবোর্ডটি রংপুর বিভাগের ঠাকুরগাঁওয়ে পিক্সেল আইটির ফিজিক্যাল এবং ডিজিটাল বাজার উপস্থিতির একটি বিস্তৃত বিশ্লেষণ প্রদান করে। বিশেষ করে ডিজিটাল মার্কেটিং এক্সিকিউটিভের জন্য ডিজাইন করা এই পোর্টালটি আঞ্চলিক বাজারের বাস্তবতা, জাতীয় মানদণ্ড (যেমন স্টার টেক), খুচরা ব্যবসা ব্যর্থতার মডেল এবং বহু-ধাপ বিশিষ্ট কৌশলগত রোডম্যাপ তুলে ধরে।",
+                kpi1Title: "আঞ্চলিক বাজার পরিসর",
+                kpi1Val: "৫টি উপজেলা",
+                kpi1Sub: "ঠাকুরগাঁও সদর, বালিয়াডাঙ্গী, পীরগঞ্জ, রানীশংকৈল, হরিপুর",
+                kpi2Title: "জাতীয় বেঞ্চমার্ক ট্রাফিক",
+                kpi2Val: "৬৯.১৫% অর্গানিক",
+                kpi2Sub: "স্টার টেকের সার্চ ট্রাফিকের অনুপাত",
+                kpi3Title: "কেনাকাটার পূর্বে অনুসন্ধান",
+                kpi3Val: "> ৯০% ডিজিটাল রিসার্চ",
+                kpi3Sub: "শোরুমে আসার পূর্বে অনলাইনে দাম ও স্টক যাচাইকারী ক্রেতা",
+                kpi4Title: "লক্ষ্যমাত্রা রাজস্ব বৃদ্ধি",
+                kpi4Val: "+৩৫% বার্ষিক",
+                kpi4Sub: "রোডম্যাপ বাস্তবায়নের পরবর্তী আনুমানিক বৃদ্ধি",
+                chartTitle: "ট্রাফিক চ্যানেল শেয়ারের তুলনামূলক চিত্র",
+                chartSub: "জাতীয় প্রযুক্তি রিটেল লিডার (স্টার টেক) বনাম সাধারণ আঞ্চলিক খুচরা দোকানের ট্রাফিক চ্যানেল তুলনা।",
+                chartFooter: "<span class=\"font-semibold text-slate-700\">মূল শিক্ষা:</span> বাজার নেতৃত্বদানকারী প্রতিষ্ঠানগুলো তাদের ট্রাফিকের প্রায় ৭০% পান বিনামূল্যে অর্গানিক সার্চ ও জিইও স্ট্রাকচারের মাধ্যমে, অতিরিক্ত বিজ্ঞাপনী খরচের ওপর নির্ভর না করে।",
+                chartLabels: ['অর্গানিক সার্চ (SEO/GEO)', 'ডাইরেক্ট ইউআরএল ও শোরুম ভিজিট', 'সোশ্যাল মিডিয়া ও মেসেজিং', 'পেইড এডস ও অ্যাফিলিয়েট'],
+                pillarsTitle: "পিক্সেল আইটির ৪টি কৌশলগত ভিত্তি",
+                pillarsSub: "আঞ্চলিক বাজারে শীর্ষস্থান অর্জনে ডিজিটাল মার্কেটিং এক্সিকিউটিভের মূল কর্মক্ষেত্র।",
+                p1Head: "১. ওয়েবসাইটের ভুল সংশোধন ও আস্থা অর্জন", p1Badge: "জরুরি (১-২ মাস)", p1Desc: "ওয়েবসাইট থেকে ডামি টেক্সট (\"Lorem Ipsum\") দূরীকরণ, রিয়েল-টাইম পণ্য স্টক ও স্পষ্ট ওয়ারেন্টি শর্ত প্রদর্শন।",
+                p2Head: "২. হাইপার-লোকাল এসইও ও জিইও", p2Badge: "মাস ২–৪", p2Desc: "উপজেলাভিত্তিক কিওয়ার্ড (যেমন \"পীরগঞ্জে ল্যাপটপের দাম\") টার্গেট করে গুগল লোকাল ৩-প্যাক এ শীর্ষে অবস্থান।",
+                p3Head: "৩. ভিডিও নির্ভর এফ-কমার্স ইঞ্জিন", p3Badge: "মাস ৩–৬", p3Desc: "\"ঠাকুরগাঁও টেক রিভিউ\" আনবক্সিং ভিডিও তৈরি এবং ফেসবুক মেসেঞ্জার ক্যাটালগ অটোমেশন।",
+                p4Head: "৪. বিটুবি ও ডোরস্টেপ সার্ভিস", p4Badge: "মাস ৬–১২", p4Desc: "বাসায়/অফিসে ডেলিভারি ও মেরামত সেবা চালু এবং স্থানীয় সরকারি-বেসরকারি প্রতিষ্ঠানের সাথে বিটুবি চুক্তি।",
+                auditHeading: "পিক্সেল আইটি ডিজিটাল অডিট ও বর্তমান অবস্থা",
+                auditDesc: "এই বিভাগটি পিক্সেল আইটির ফিজিক্যাল আউটলেট, পণ্য তালিকা, বর্তমান ওপেনকার্ট ই-কমার্স ওয়েবসাইট (<code class=\"bg-slate-100 text-brand-700 px-1.5 py-0.5 rounded\">pixelit.com.bd</code>) এবং এর প্রযুক্তিগত ত্রুটিগুলো বিশ্লেষণ করে।",
+                auditPhysTitle: "ফিজিক্যাল শোরুম ও প্রোডাক্ট পোর্টফোলিও",
+                auditOutletsHead: "ফিজিক্যাল আউটলেটসমূহ (ঠাকুরগাঁও):",
+                auditOutlet1: "<span class=\"font-medium text-slate-800\">প্রধান শোরুম:</span> সুরূচি সুপার মার্কেট, বঙ্গবন্ধু সড়ক",
+                auditOutlet2: "<span class=\"font-medium text-slate-800\">দ্বিতীয় আউটলেট:</span> নিশি মার্কেট, মুসলিম নগর",
+                auditInvHead: "ইনভেন্টরি পণ্য তালিকা:",
+                invLaptopsTitle: "ল্যাপটপ ও পিসি", invLaptopsBody: "আসুস ভিভোবুক ১৫, লেনোভো আইডিয়া প্যাড স্লিম ৩আই, ইনটেল কোর আই৩/আই৫, গিগাবাইট মাদারবোর্ড।",
+                invRouterTitle: "নেটওয়ার্কিং ডিভাইস", invRouterBody: "টিপি-লিংক, টেন্ডা, নেটিস এবং কুডি ব্র্যান্ডের ডুয়াল-ব্যান্ড ওয়াই-ফাই ৬ ও এসি১২০০ রাউটার।",
+                invPeriTitle: "পেরিফেরালস ও এক্সেসরিজ", invPeriBody: "এ৪টেক, মাইক্রোপ্যাক, হাভিট অফিস কিবোর্ড, সাইলেন্ট মাউস এবং গেমিং গিয়ার।",
+                invPrintTitle: "প্রিন্টার ও প্রজেক্টর", invPrintBody: "ক্যানন পিক্সমা ইঙ্ক ট্যাংক, এইচপি লেজার, ব্রাদার মাল্টি-ফাংশন, ম্যাগকিউবিক স্মার্ট প্রজেক্টর।",
+                auditTechTitle: "ডিজিটাল ইনফ্রাস্ফাকচার ও ঘাটতি অডিট",
+                bug1Title: "টেমপ্লেটে ডামি টেক্সট ত্রুটি", bug1Desc: "<code class=\"text-red-700\">pixelit.com.bd</code> এর ক্যাটাগরি, ব্যানার ও ফুটারে \"Lorem Ipsum\" ডামি টেক্সট বিদ্যমান, যা ক্রেতার আস্থা নষ্ট করে এবং বাউন্স রেট বাড়ায়।",
+                bug2Title: "এসইও ও স্কিমা মার্কআপের অভাব", bug2Desc: "JSON-LD স্ট্রাকচার্ড ডাটা অনুপস্থিত। সংলগ্ন উপজেলাগুলোর (বালিয়াডাঙ্গী, পীরগঞ্জ, রানীশংকৈল) জন্য কোনো স্থানীয় কিওয়ার্ড অপটিমাইজেশন নেই।",
+                bug3Title: "বিচ্ছিন্ন সোশ্যাল মিডিয়া পরিচালনা", bug3Desc: "স্বয়ংক্রিয় ক্যাটালগ সিঙ্ক, মেটা ভিডিও অ্যাডস বা স্বয়ংক্রিয় লিড ক্যাপচার ছাড়াই সাধারণ ফেসবুক পোস্টের ওপর অতিরিক্ত নির্ভরতা।",
+                benchTitle: "আঞ্চলিক ও জাতীয় প্রতিযোগী মানদণ্ড বিশ্লেষণ",
+                benchDesc: "জাতীয় টেক জায়ান্ট **স্টার টেক** এবং স্থানীয় ঠাকুরগাঁও প্রতিযোগীদের (**অ্যাপটাচ কম্পিউটার** ও **ঠাকুরগাঁও আইটি**) সাথে পিক্সেল আইটির একটি তুলনামূলক চিত্র।",
+                matrixTitle: "প্রতিযোগী তুলনা ম্যাট্রিক্স",
+                matrixFilterLbl: "ফিল্টার হাইলাইট:",
+                failTitle: "আঞ্চলিক হার্ডওয়্যার শপের ব্যর্থতার কারণ বিশ্লেষণ",
+                failDesc: "আঞ্চলিক বাজারে চিরাচরিত কম্পিউটার দোকানগুলো কেন পিছিয়ে পড়ে? ৯০% টেক ক্রেতা দোকানে যাওয়ার আগে অনলাইনে তথ্য যাচাই করেন। সঠিক অনলাইন উপস্থিতি না থাকলে স্থানীয় চাহিদা সরাসরি জাতীয় ই-কমার্স পোর্টালে বা অনলাইন বিক্রেতাদের কাছে স্থানান্তরিত হয় (ডিজিটাল ডিসইন্টারমিডিয়েশন)।",
+                st1Badge: "ধাপ ১", st1Title: "অনলাইনে প্রাথমিক অনুসন্ধান", st1Desc: "কেনাকাটার পূর্বে ক্রেতা মোবাইল ফোনে পণ্য ও দাম অনুসন্ধান করেন।",
+                st2Badge: "ধাপ ২", st2Title: "স্থানীয় শপের অনুপস্থিতি", st2Desc: "স্থানীয় দোকানের আপডেট ওয়েবসাইট না থাকা বা গুগলে না পাওয়া।",
+                st3Badge: "ধাপ ৩", st3Title: "অন্যত্র অর্ডার স্থানান্তর", st3Desc: "চাহিদা জাতীয় ই-কমার্স বা ফেসবুক ভিডিও সেলারদের কাছে চলে যাওয়া।",
+                st4Badge: "ধাপ ৪", st4Title: "মুনাফা হ্রাস ও ব্যবসায়িক স্থবিরতা", st4Desc: "শোরুমে অবিক্রিত পণ্য জমে থাকা এবং ব্যবসা সংকুচিত হওয়া।",
+                failBoxHead: "ব্যর্থতা মোডের বিস্তারিত ব্যাখ্যা",
+                roadTitle: "পিক্সেল আইটির জন্য বাস্তবায়নযোগ্য গ্রোথ রোডম্যাপ",
+                roadDesc: "ডিজিটাল মার্কেটিং এক্সিকিউটিভ হিসেবে পিক্সেল আইটিকে ঠাকুরগাঁওয়ের এক নম্বর টেক রিটেলারে পরিণত করার চার ধাপের পূর্ণাঙ্গ বাস্তবায়ন পরিকল্পনা।",
+                phase1Btn: "ধাপ ১: টেকনিক্যাল রিমেডিয়েশন (মাস ১-২)",
+                phase2Btn: "ধাপ ২: লোকাল এসইও ও জিইও (মাস ২-৪)",
+                phase3Btn: "ধাপ ৩: এফ-কমার্স ও ভিডিও (মাস ৩-৬)",
+                phase4Btn: "ধাপ ৪: অমনিচ্যানেল ও বিটুবি (মাস ৬-১২)",
+                footerP1: "পিক্সেল আইটি ঠাকুরগাঁও - গ্রোথ স্ট্র্যাটেজি ও ডিজিটাল ট্রান্সফরমেশন রিপোর্ট",
+                footerP2: "ডিজিটাল মার্কেটিং এক্সিকিউটিভের ব্যবহারের জন্য প্রস্তুতকৃত | সুরূচি সুপার মার্কেট ও নিশি মার্কেট"
+            }
+        };
+
+        const failureDataDict = {
+            en: {
+                1: {
+                    title: "Stage 1: High-Intent Consumer Pre-Purchase Query",
+                    desc: "Modern technology hardware buyers across Bangladesh—including students, institutions, and professionals in Thakurgaon—no longer walk into physical computer markets blind. Over 90% perform pre-purchase digital research on their smartphones, checking component prices, specs, and local warranty terms.",
+                    impact: "Strategic Context: If Pixel IT does not present detailed pricing and inventory status immediately in search results, the consumer assumes the store lacks stock and drops Pixel IT from their consideration set."
+                },
+                2: {
+                    title: "Stage 2: Absence of Local Web & SEO Presence",
+                    desc: "When local retailers neglect web catalog updates, leave placeholder 'Lorem Ipsum' text, or lack schema tags, search engines like Google omit them from regional search results (e.g., 'Laptop Price in Pirganj').",
+                    impact: "Strategic Context: Un-optimized web portals surrender organic search engine visibility directly to national competitors who publish dynamic stock and transparent prices."
+                },
+                3: {
+                    title: "Stage 3: Digital Disintermediation & Order Bypassing",
+                    desc: "Because the local physical shop is absent during the digital research phase, customer demand bypasses regional markets entirely. Buyers place orders online with national giants like Star Tech or buy from local video sellers like Aptouch.",
+                    impact: "Strategic Context: High-value orders (laptops, PC assemblies, corporate office setups) leak out of Thakurgaon to external e-commerce providers."
+                },
+                4: {
+                    title: "Stage 4: Margin Compression & Retail Stagnation",
+                    desc: "Left with only random footfall traffic, traditional brick-and-mortar outlets experience slow inventory turnover, aging hardware stock, and compressed profit margins, ultimately leading to business stagnation or shutdown.",
+                    impact: "Strategic Context: Operating costs at Suruchi Super Market and Nishi Market remain fixed while digital competitors absorb regional revenue growth."
+                }
+            },
+            bn: {
+                1: {
+                    title: "ধাপ ১: কেনাকাটার পূর্বে ডিজিটাল অনুসন্ধান",
+                    desc: "ঠাকুরগাঁওয়ের ছাত্রছাত্রী, পেশাজীবী ও প্রতিষ্ঠানসহ ৯০% এরও বেশি প্রযুক্তি ক্রেতা দোকানে সশরীরে আসার আগেই মোবাইলে পণ্যের দাম, স্পেসিফিকেশন ও ওয়ারেন্টি যাচাই করেন।",
+                    impact: "কৌশলগত প্রভাব: পিক্সেল আইটি সার্চ রেজাল্টে হালনাগাদ পণ্যের দাম ও স্টক না দেখালে ক্রেতারা ধরে নেন দোকানে কাঙ্ক্ষিত পণ্য নেই এবং অন্য কোথাও কেনাকাটা করেন।"
+                },
+                2: {
+                    title: "ধাপ ২: ওয়েবসাইটের তথ্যহীনতা ও দুর্বল এসইও",
+                    desc: "স্থানীয় দোকান ওয়েবসাইটে 'Lorem Ipsum' ডামি টেক্সট রেখে দিলে বা গুগল এসইও না করলে স্থানীয় সার্চ রেজাল্টে (যেমন 'পীরগঞ্জে ল্যাপটপের দাম') তাদের নাম আসে না।",
+                    impact: "কৌশলগত প্রভাব: অপটিমাইজড না থাকা ওয়েবসাইটগুলো সার্চ ইঞ্জিন ট্রাফিক হারায় এবং ক্রেতারা জাতীয় ই-কমার্স পোর্টালে চলে যান।"
+                },
+                3: {
+                    title: "ধাপ ৩: অর্ডার অন্যত্র স্থানান্তর (ডিজিটাল ডিসইন্টারমিডিয়েশন)",
+                    desc: "অনলাইন অনুসন্ধানের সময় স্থানীয় দোকানকে খুঁজে না পেয়ে ক্রেতারা সরাসরি স্টার টেকের মতো জাতীয় সাইটে বা অনলাইন ভিডিও বিক্রেতাদের মাধ্যমে অর্ডার করেন।",
+                    impact: "কৌশলগত প্রভাব: ঠাকুরগাঁওয়ের মূল্যবান ল্যাপটপ ও কর্পোরেট পিসি বিক্রির কাস্টমার স্থানীয় বাজার থেকে বাইরে চলে যায়।"
+                },
+                4: {
+                    title: "ধাপ ৪: বিক্রয় হ্রাস ও ব্যবসায়িক স্থবিরতা",
+                    desc: "শুধু মাত্র ফুটফল কাস্টমারের ওপর নির্ভর করে থাকলে বিক্রয়ের গতি কমে যায়, অবিক্রিত পণ্যের স্টক জমে থাকে এবং লাভের পরিমাণ মারাত্মকভাবে কমে যায়।",
+                    impact: "কৌশলগত প্রভাব: শোরুমের নির্ধারিত পরিচালন খরচ ঠিকই থাকে, অথচ ডিজিটাল প্ল্যাটফর্মের অভাব মূল রাজস্ব কেড়ে নেয়।"
+                }
+            }
+        };
+
+        // Language Switcher Function
+        function setLanguage(lang) {
+            currentLang = lang;
+            const data = dict[lang];
+
+            // Update Header & Nav
+            document.getElementById('app-title').innerText = data.appTitle;
+            document.getElementById('app-subtitle').innerText = data.appSubtitle;
+            document.getElementById('nav-overview').innerText = data.navOverview;
+            document.getElementById('nav-audit').innerText = data.navAudit;
+            document.getElementById('nav-benchmarks').innerText = data.navBenchmarks;
+            document.getElementById('nav-failures').innerText = data.navFailures;
+            document.getElementById('nav-roadmap').innerText = data.navRoadmap;
+
+            // Mobile Nav
+            document.getElementById('mnav-overview').innerText = data.navOverview;
+            document.getElementById('mnav-audit').innerText = data.navAudit;
+            document.getElementById('mnav-benchmarks').innerText = data.navBenchmarks;
+            document.getElementById('mnav-failures').innerText = data.navFailures;
+            document.getElementById('mnav-roadmap').innerText = data.navRoadmap;
+
+            // Toggle Button Styling
+            if(lang === 'en') {
+                document.getElementById('lang-btn-en').className = "px-2.5 py-1 rounded-md transition-all bg-brand-600 text-white shadow-sm";
+                document.getElementById('lang-btn-bn').className = "px-2.5 py-1 rounded-md transition-all text-slate-600 hover:text-slate-900";
+            } else {
+                document.getElementById('lang-btn-bn').className = "px-2.5 py-1 rounded-md transition-all bg-brand-600 text-white shadow-sm";
+                document.getElementById('lang-btn-en').className = "px-2.5 py-1 rounded-md transition-all text-slate-600 hover:text-slate-900";
+            }
+
+            // Overview Section
+            document.getElementById('ov-heading').innerText = data.ovHeading;
+            document.getElementById('ov-desc').innerText = data.ovDesc;
+            document.getElementById('kpi1-title').innerText = data.kpi1Title;
+            document.getElementById('kpi1-val').innerText = data.kpi1Val;
+            document.getElementById('kpi1-sub').innerText = data.kpi1Sub;
+            document.getElementById('kpi2-title').innerText = data.kpi2Title;
+            document.getElementById('kpi2-val').innerText = data.kpi2Val;
+            document.getElementById('kpi2-sub').innerText = data.kpi2Sub;
+            document.getElementById('kpi3-title').innerText = data.kpi3Title;
+            document.getElementById('kpi3-val').innerText = data.kpi3Val;
+            document.getElementById('kpi3-sub').innerText = data.kpi3Sub;
+            document.getElementById('kpi4-title').innerText = data.kpi4Title;
+            document.getElementById('kpi4-val').innerText = data.kpi4Val;
+            document.getElementById('kpi4-sub').innerText = data.kpi4Sub;
+
+            // Chart Texts & Legend
+            document.getElementById('chart-title').innerText = data.chartTitle;
+            document.getElementById('chart-sub').innerText = data.chartSub;
+            document.getElementById('chart-footer').innerHTML = data.chartFooter;
+
+            if (chartInstance) {
+                chartInstance.data.labels = data.chartLabels;
+                chartInstance.update();
+            }
+
+            // Pillars
+            document.getElementById('pillars-title').innerText = data.pillarsTitle;
+            document.getElementById('pillars-sub').innerText = data.pillarsSub;
+            document.getElementById('pillar1-head').innerText = data.p1Head;
+            document.getElementById('pillar1-badge').innerText = data.p1Badge;
+            document.getElementById('pillar1-desc').innerText = data.p1Desc;
+            document.getElementById('pillar2-head').innerText = data.p2Head;
+            document.getElementById('pillar2-badge').innerText = data.p2Badge;
+            document.getElementById('pillar2-desc').innerText = data.p2Desc;
+            document.getElementById('pillar3-head').innerText = data.p3Head;
+            document.getElementById('pillar3-badge').innerText = data.p3Badge;
+            document.getElementById('pillar3-desc').innerText = data.p3Desc;
+            document.getElementById('pillar4-head').innerText = data.p4Head;
+            document.getElementById('pillar4-badge').innerText = data.p4Badge;
+            document.getElementById('pillar4-desc').innerText = data.p4Desc;
+
+            // Audit Section
+            document.getElementById('audit-heading').innerText = data.auditHeading;
+            document.getElementById('audit-desc').innerHTML = data.auditDesc;
+            document.getElementById('audit-phys-title').innerText = data.auditPhysTitle;
+            document.getElementById('audit-outlets-head').innerText = data.auditOutletsHead;
+            document.getElementById('audit-outlet-1').innerHTML = data.auditOutlet1;
+            document.getElementById('audit-outlet-2').innerHTML = data.auditOutlet2;
+            document.getElementById('audit-inv-head').innerText = data.auditInvHead;
+            document.getElementById('inv-laptops-title').innerText = data.invLaptopsTitle;
+            document.getElementById('inv-laptops-body').innerText = data.invLaptopsBody;
+            document.getElementById('inv-router-title').innerText = data.invRouterTitle;
+            document.getElementById('inv-router-body').innerText = data.invRouterBody;
+            document.getElementById('inv-peri-title').innerText = data.invPeriTitle;
+            document.getElementById('inv-peri-body').innerText = data.invPeriBody;
+            document.getElementById('inv-print-title').innerText = data.invPrintTitle;
+            document.getElementById('inv-print-body').innerText = data.invPrintBody;
+
+            document.getElementById('audit-tech-title').innerText = data.auditTechTitle;
+            document.getElementById('bug1-title').innerText = data.bug1Title;
+            document.getElementById('bug1-desc').innerHTML = data.bug1Desc;
+            document.getElementById('bug2-title').innerText = data.bug2Title;
+            document.getElementById('bug2-desc').innerHTML = data.bug2Desc;
+            document.getElementById('bug3-title').innerText = data.bug3Title;
+            document.getElementById('bug3-desc').innerHTML = data.bug3Desc;
+
+            // Benchmarks Section
+            document.getElementById('bench-title').innerText = data.benchTitle;
+            document.getElementById('bench-desc').innerText = data.benchDesc;
+            document.getElementById('matrix-title').innerText = data.matrixTitle;
+            document.getElementById('matrix-filter-lbl').innerText = data.matrixFilterLbl;
+
+            // Failure Section
+            document.getElementById('fail-title').innerText = data.failTitle;
+            document.getElementById('fail-desc').innerText = data.failDesc;
+            document.getElementById('st1-badge').innerText = data.st1Badge;
+            document.getElementById('st1-title').innerText = data.st1Title;
+            document.getElementById('st1-desc').innerText = data.st1Desc;
+            document.getElementById('st2-badge').innerText = data.st2Badge;
+            document.getElementById('st2-title').innerText = data.st2Title;
+            document.getElementById('st2-desc').innerText = data.st2Desc;
+            document.getElementById('st3-badge').innerText = data.st3Badge;
+            document.getElementById('st3-title').innerText = data.st3Title;
+            document.getElementById('st3-desc').innerText = data.st3Desc;
+            document.getElementById('st4-badge').innerText = data.st4Badge;
+            document.getElementById('st4-title').innerText = data.st4Title;
+            document.getElementById('st4-desc').innerText = data.st4Desc;
+            document.getElementById('fail-box-head').innerText = data.failBoxHead;
+
+            // Refresh currently selected failure step
+            selectFailureStep(1);
+
+            // Roadmap Buttons & Titles
+            document.getElementById('road-title').innerText = data.roadTitle;
+            document.getElementById('road-desc').innerText = data.roadDesc;
+            document.getElementById('phase-btn-1').innerText = data.phase1Btn;
+            document.getElementById('phase-btn-2').innerText = data.phase2Btn;
+            document.getElementById('phase-btn-3').innerText = data.phase3Btn;
+            document.getElementById('phase-btn-4').innerText = data.phase4Btn;
+
+            // Footer
+            document.getElementById('footer-p1').innerText = data.footerP1;
+            document.getElementById('footer-p2').innerText = data.footerP2;
+        }
+
+        // Navigation Switching
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(el => el.classList.add('hidden'));
+
+            const navBtns = document.querySelectorAll('.tab-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-slate-600');
+            });
+
+            const targetSection = document.getElementById('sec-' + tabId);
+            if(targetSection) targetSection.classList.remove('hidden');
+
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) {
+                activeNav.classList.add('tab-active');
+                activeNav.classList.remove('text-slate-600');
+            }
+
+            const mBtns = document.querySelectorAll('[id^="mnav-"]');
+            mBtns.forEach(mbtn => {
+                mbtn.classList.remove('bg-brand-600', 'text-white');
+                mbtn.classList.add('bg-white', 'text-slate-800');
+            });
+            const activeMNav = document.getElementById('mnav-' + tabId);
+            if(activeMNav) {
+                activeMNav.classList.remove('bg-white', 'text-slate-800');
+                activeMNav.classList.add('bg-brand-600', 'text-white');
+            }
+        }
+
+        // Competitive Matrix Filter Logic
+        function filterMatrix() {
+            const val = document.getElementById('matrixFilter').value;
+            const rows = document.querySelectorAll('.matrix-row');
+            
+            rows.forEach(row => {
+                if (val === 'all') {
+                    row.style.display = '';
+                } else if (row.classList.contains('metric-' + val)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Failure Step Selection
+        function selectFailureStep(stepNum) {
+            for (let i = 1; i <= 4; i++) {
+                const card = document.getElementById('step-card-' + i);
+                if (i === stepNum) {
+                    card.classList.add('border-brand-500');
+                    card.classList.remove('border-slate-200');
+                } else {
+                    card.classList.remove('border-brand-500');
+                    card.classList.add('border-slate-200');
+                }
+            }
+
+            const data = failureDataDict[currentLang][stepNum];
+            document.getElementById('failure-detail-title').innerText = data.title;
+            document.getElementById('failure-detail-desc').innerText = data.desc;
+            document.getElementById('fail-box-impact').innerText = data.impact;
+        }
+
+        // Roadmap Phase Switcher
+        function showPhase(phaseNum) {
+            const phases = document.querySelectorAll('.phase-container');
+            phases.forEach(p => p.classList.add('hidden'));
+
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById('phase-btn-' + i);
+                btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-300');
+            }
+
+            const target = document.getElementById('phase-content-' + phaseNum);
+            if(target) target.classList.remove('hidden');
+
+            const activeBtn = document.getElementById('phase-btn-' + phaseNum);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-300');
+                activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-sm');
+            }
+        }
+
+        // Initialize Dynamic Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('trafficBenchmarkChart').getContext('2d');
+            
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: dict.en.chartLabels,
+                    datasets: [{
+                        label: 'Traffic Share (%)',
+                        data: [69.15, 15.30, 10.55, 5.00],
+                        backgroundColor: ['#0284c7', '#0d9488', '#f59e0b', '#cbd5e1'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                font: {
+                                    family: 'Plus Jakarta Sans',
+                                    size: 11
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
